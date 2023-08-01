@@ -1,4 +1,5 @@
 from math import comb
+import math
 
 f = open("rosalind_lcsm.txt", 'r')
 
@@ -423,8 +424,26 @@ def sharedMotif():
 
 
 
+# 7/31/23
 
-print(sharedMotif())
+# Independent Alleles
+
+
+def indAlleles(k, n):
+
+    totPop = 2 ** k
+
+    result = 0
+    for i in range(n, (totPop + 1)):
+        result += comb(totPop, i) * 0.25**i * 0.75**(totPop-i)
+    
+    return result
+
+
+print(indAlleles(5, 9))
+
+
+
 
 
 f.close()
