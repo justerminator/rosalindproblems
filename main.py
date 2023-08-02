@@ -1,7 +1,10 @@
 from math import comb
-import math
+import sys, re # IO and motif finding
+import urllib3 # get protein fasta from uniprot
+from Bio import SeqIO, Seq # fasta parsing and manipulation   
 
-f = open("rosalind_lcsm.txt", 'r')
+
+f = open("rosalind_mrna.txt", 'r')
 
 # 7/23/23
 
@@ -440,10 +443,31 @@ def indAlleles(k, n):
     return result
 
 
-print(indAlleles(5, 9))
+# 8/1/23
 
+# Inferring mRNA from Protein
 
+def RNAtoAA():
+    frequence = {}
+    for k, v in amino_acids.items():
+        if v not in frequence:
+            frequence[v] = 0
+        frequence[v] += 1
+    
+    return frequence
 
+def possiblemRNA():
+    freq = RNAtoAA()
+    possibilityAmnt = 1
+    print(freq)
+    for letter in f.readline().strip():
+        
+        possibilityAmnt = (possibilityAmnt * freq[letter]) % 1000000
+    
+    possibilityAmnt = (possibilityAmnt * freq['*']) % 1000000
 
+    return possibilityAmnt
+
+print(possiblemRNA())
 
 f.close()
